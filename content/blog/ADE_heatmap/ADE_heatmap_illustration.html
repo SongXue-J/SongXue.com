@@ -1,0 +1,431 @@
+---
+title: "ADE Heatmap illustration"
+author: "Song Xue"
+date: "2026-01-29"
+categories: ["R"]
+tags:
+- R Markdown
+- plot
+---
+
+
+
+<div id="introduciton" class="section level2">
+<h2>Introduciton</h2>
+<p>This R Markdown document describes how to merge multiple values from different assays to create heatmaps to visualize the features of each antibody-variant pair.</p>
+<!--more-->
+<p>The following steps present how to read data from excel files, merge them together and use them to make a pretty heatmap.</p>
+</div>
+<div id="prepare-r-packages" class="section level2">
+<h2>Prepare R packages</h2>
+<p>I need <strong>readxl</strong> and <strong>writexl</strong> to input/output data, <strong>dplyr</strong> and <strong>scales</strong> to process data, and <strong>pheatmap</strong>, <strong>ggplot2</strong>, <strong>tidyverse</strong> to create graphs:</p>
+<pre class="r"><code>&gt; library(readxl)
+&gt; library(writexl)
+&gt; library(scales)
+&gt; library(pheatmap)
+&gt; library(ggplot2)
+&gt; library(tidyverse)</code></pre>
+</div>
+<div id="process-data" class="section level2">
+<h2>Process data</h2>
+<div id="set-input-file-or-folder-path" class="section level3">
+<h3>set input file or folder path</h3>
+<pre class="r"><code>&gt; input_file_path = &quot;./serum_dataset/vaccine serum samples-wt delta omi.xlsx&quot;
+&gt; input_folder_path = &quot;./serum_dataset&quot;
+&gt; # replace it with your file or folder path</code></pre>
+<p>Usually, I’d like to export the graphs to the same folder as the input files :</p>
+<pre class="r"><code>&gt; outputpath = paste0(dirname(input_file_path),&quot;\\heatmap.pdf&quot;) </code></pre>
+<p>This <code>outputpath</code> will be named as <strong>“heatmap.pdf”</strong> in the same folder as the input file:</p>
+<pre><code>[1] &quot;./serum_dataset\\heatmap.pdf&quot;</code></pre>
+<p>If you chose folder path as input, the <code>outputpath</code> should be as same as the <code>input_folder_path</code>:</p>
+<pre class="r"><code>&gt; outputpath = input_folder_path
+&gt; outputpath</code></pre>
+</div>
+<div id="read-data" class="section level3">
+<h3>read data</h3>
+<p>Importantly, make sure the data in your excel files looks like this:</p>
+<table style="width:100%;">
+<colgroup>
+<col width="3%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">sample</th>
+<th align="center">WT-1</th>
+<th align="center">WT-2</th>
+<th align="center">WT-3</th>
+<th align="center">WT-4</th>
+<th align="center">WT-5</th>
+<th align="center">WT-6</th>
+<th align="center">WT-7</th>
+<th align="center">WT-8</th>
+<th align="center">WT-9</th>
+<th align="center">Delta-1</th>
+<th align="center">Delta-2</th>
+<th align="center">Delta-3</th>
+<th align="center">Delta-4</th>
+<th align="center">Delta-5</th>
+<th align="center">Delta-6</th>
+<th align="center">Delta-7</th>
+<th align="center">Delta-8</th>
+<th align="center">Delta-9</th>
+<th align="center">Omicron-1</th>
+<th align="center">Omicron-2</th>
+<th align="center">Omicron-3</th>
+<th align="center">Omicron-4</th>
+<th align="center">Omicron-5</th>
+<th align="center">Omicron-6</th>
+<th align="center">Omicron-7</th>
+<th align="center">Omicron-8</th>
+<th align="center">Omicron-9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">249</td>
+<td align="center">3490</td>
+<td align="center">3566</td>
+<td align="center">3701</td>
+<td align="center">3823</td>
+<td align="center">3796</td>
+<td align="center">3779</td>
+<td align="center">4106</td>
+<td align="center">6278</td>
+<td align="center">11691</td>
+<td align="center">2318</td>
+<td align="center">2265</td>
+<td align="center">2270</td>
+<td align="center">2361</td>
+<td align="center">2399</td>
+<td align="center">2625</td>
+<td align="center">4045</td>
+<td align="center">19085</td>
+<td align="center">42810</td>
+<td align="center">2688</td>
+<td align="center">2691</td>
+<td align="center">2608</td>
+<td align="center">2743</td>
+<td align="center">2742</td>
+<td align="center">2697</td>
+<td align="center">2756</td>
+<td align="center">3168</td>
+<td align="center">10036</td>
+</tr>
+<tr class="even">
+<td align="center">NA</td>
+<td align="center">3236</td>
+<td align="center">3265</td>
+<td align="center">3310</td>
+<td align="center">3453</td>
+<td align="center">3100</td>
+<td align="center">2996</td>
+<td align="center">3179</td>
+<td align="center">10101</td>
+<td align="center">17397</td>
+<td align="center">2160</td>
+<td align="center">2154</td>
+<td align="center">2158</td>
+<td align="center">2899</td>
+<td align="center">2047</td>
+<td align="center">2424</td>
+<td align="center">6343</td>
+<td align="center">10983</td>
+<td align="center">41618</td>
+<td align="center">2550</td>
+<td align="center">2473</td>
+<td align="center">2521</td>
+<td align="center">2474</td>
+<td align="center">2317</td>
+<td align="center">2331</td>
+<td align="center">2356</td>
+<td align="center">3451</td>
+<td align="center">7322</td>
+</tr>
+<tr class="odd">
+<td align="center">230</td>
+<td align="center">2384</td>
+<td align="center">2528</td>
+<td align="center">2675</td>
+<td align="center">2620</td>
+<td align="center">2673</td>
+<td align="center">2764</td>
+<td align="center">4490</td>
+<td align="center">10318</td>
+<td align="center">18427</td>
+<td align="center">1879</td>
+<td align="center">2515</td>
+<td align="center">1857</td>
+<td align="center">1938</td>
+<td align="center">2726</td>
+<td align="center">4257</td>
+<td align="center">12521</td>
+<td align="center">23052</td>
+<td align="center">57013</td>
+<td align="center">2255</td>
+<td align="center">2264</td>
+<td align="center">2126</td>
+<td align="center">2276</td>
+<td align="center">2062</td>
+<td align="center">2187</td>
+<td align="center">2262</td>
+<td align="center">2363</td>
+<td align="center">5507</td>
+</tr>
+<tr class="even">
+<td align="center">NA</td>
+<td align="center">2394</td>
+<td align="center">2296</td>
+<td align="center">2315</td>
+<td align="center">2243</td>
+<td align="center">2376</td>
+<td align="center">3073</td>
+<td align="center">5018</td>
+<td align="center">14496</td>
+<td align="center">18438</td>
+<td align="center">1852</td>
+<td align="center">1869</td>
+<td align="center">1849</td>
+<td align="center">1792</td>
+<td align="center">1907</td>
+<td align="center">4469</td>
+<td align="center">16023</td>
+<td align="center">23121</td>
+<td align="center">29738</td>
+<td align="center">2121</td>
+<td align="center">2088</td>
+<td align="center">2464</td>
+<td align="center">2183</td>
+<td align="center">2036</td>
+<td align="center">1983</td>
+<td align="center">1931</td>
+<td align="center">2320</td>
+<td align="center">4665</td>
+</tr>
+<tr class="odd">
+<td align="center">244</td>
+<td align="center">1958</td>
+<td align="center">1936</td>
+<td align="center">2026</td>
+<td align="center">2005</td>
+<td align="center">1976</td>
+<td align="center">2474</td>
+<td align="center">2137</td>
+<td align="center">4656</td>
+<td align="center">11394</td>
+<td align="center">1698</td>
+<td align="center">2007</td>
+<td align="center">1678</td>
+<td align="center">1796</td>
+<td align="center">1647</td>
+<td align="center">1795</td>
+<td align="center">3571</td>
+<td align="center">9030</td>
+<td align="center">30330</td>
+<td align="center">2038</td>
+<td align="center">1889</td>
+<td align="center">2044</td>
+<td align="center">1917</td>
+<td align="center">1911</td>
+<td align="center">2243</td>
+<td align="center">2243</td>
+<td align="center">2969</td>
+<td align="center">6628</td>
+</tr>
+<tr class="even">
+<td align="center">NA</td>
+<td align="center">1832</td>
+<td align="center">1921</td>
+<td align="center">1920</td>
+<td align="center">1790</td>
+<td align="center">1854</td>
+<td align="center">1996</td>
+<td align="center">2062</td>
+<td align="center">3999</td>
+<td align="center">10572</td>
+<td align="center">1703</td>
+<td align="center">1662</td>
+<td align="center">1543</td>
+<td align="center">1523</td>
+<td align="center">1683</td>
+<td align="center">3228</td>
+<td align="center">3715</td>
+<td align="center">7058</td>
+<td align="center">20046</td>
+<td align="center">1858</td>
+<td align="center">1881</td>
+<td align="center">1799</td>
+<td align="center">1760</td>
+<td align="center">1749</td>
+<td align="center">1736</td>
+<td align="center">1984</td>
+<td align="center">2797</td>
+<td align="center">8719</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>Sample</strong> column will be used as the key to merge data together.
+If your data format matches the example above, we can read it by these following commands:</p>
+<ul>
+<li>If your data is stored in different excel files which contains only <strong>one</strong> sheet:</li>
+</ul>
+<pre class="r"><code>&gt; file_names &lt;- list.files(input_folder_path, pattern = &quot;\\.xlsx$|\\.xls$&quot;, full.names = TRUE)
+&gt; merged.data = list()
+&gt; for (i in 1:length(file_names)) {
++     # read data in excel files
++     data &lt;- read_excel(file_names[i])
++     colnames(data)[1] = &quot;sample&quot;
++     # merge data together 
++     merged.data[[i]] = data
++ }
+&gt; merged_df = merged.data[[1]]</code></pre>
+<p>Let’s take a look at the output <code>merged_df</code>:</p>
+<p>It’s a dataframe:</p>
+<pre class="r"><code>&gt; class(merged_df)
+[1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+</div>
+<div id="data-processing" class="section level3">
+<h3>data processing</h3>
+<p>This <code>merged_df</code> will be used as the input to undergo further processing, including <strong>merge batches</strong>, <strong>omit <code>NA</code> value</strong> and <strong>normalization</strong></p>
+<div id="merge-batches-and-omit-na-value" class="section level4">
+<h4><strong>merge batches</strong> and <strong>omit <code>NA</code> value</strong></h4>
+<pre><code> [1] &quot;sample&quot;    &quot;WT-1&quot;      &quot;WT-2&quot;      &quot;WT-3&quot;      &quot;WT-4&quot;      &quot;WT-5&quot;     
+ [7] &quot;WT-6&quot;      &quot;WT-7&quot;      &quot;WT-8&quot;      &quot;WT-9&quot;      &quot;Delta-1&quot;   &quot;Delta-2&quot;  
+[13] &quot;Delta-3&quot;   &quot;Delta-4&quot;   &quot;Delta-5&quot;   &quot;Delta-6&quot;   &quot;Delta-7&quot;   &quot;Delta-8&quot;  
+[19] &quot;Delta-9&quot;   &quot;Omicron-1&quot; &quot;Omicron-2&quot; &quot;Omicron-3&quot; &quot;Omicron-4&quot; &quot;Omicron-5&quot;
+[25] &quot;Omicron-6&quot; &quot;Omicron-7&quot; &quot;Omicron-8&quot; &quot;Omicron-9&quot;</code></pre>
+</div>
+<div id="normalization-using-z-score" class="section level4">
+<h4><strong>normalization</strong> using Z-score</h4>
+<p>Z-score is usually used to perform standardization. <a href="https://zhuanlan.zhihu.com/p/69074703">Here</a> is a detailed explanation about its definition. Briefly, we here use <strong>(x-μ)/σ</strong> to calculate the z-score of <strong>Binding</strong>, <strong>Neutralization</strong>, <strong>ADE</strong> and <strong>Competition ELISA</strong> assays respectively.</p>
+<pre class="r"><code>&gt; output.data = merged_df %&gt;% na.omit()
+&gt; rownames(output.data) = output.data$sample
+&gt; output.data$sample = NULL</code></pre>
+<p>Take a look at the <code>outout.data</code>:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">WT-1</th>
+<th align="center">WT-2</th>
+<th align="center">WT-3</th>
+<th align="center">WT-4</th>
+<th align="center">WT-5</th>
+<th align="center">WT-6</th>
+<th align="center">WT-7</th>
+<th align="center">WT-8</th>
+<th align="center">WT-9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">3490</td>
+<td align="center">3566</td>
+<td align="center">3701</td>
+<td align="center">3823</td>
+<td align="center">3796</td>
+<td align="center">3779</td>
+<td align="center">4106</td>
+<td align="center">6278</td>
+<td align="center">11691</td>
+</tr>
+<tr class="even">
+<td align="center">2384</td>
+<td align="center">2528</td>
+<td align="center">2675</td>
+<td align="center">2620</td>
+<td align="center">2673</td>
+<td align="center">2764</td>
+<td align="center">4490</td>
+<td align="center">10318</td>
+<td align="center">18427</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="create-heatmap" class="section level2">
+<h2>Create Heatmap</h2>
+<p>Now you have already gotten your data for make heatmap, but there are still some more things to do.</p>
+<div id="annotate-columns-and-rows" class="section level3">
+<h3>annotate columns and rows</h3>
+<p>Note that the column annotations <strong>must</strong> match the order in your <code>output.data</code>.<br />
+So you may want to double-check how your <code>output.data</code> arranges:</p>
+<pre class="r"><code>&gt; colnames(output.data)
+ [1] &quot;WT-1&quot;      &quot;WT-2&quot;      &quot;WT-3&quot;      &quot;WT-4&quot;      &quot;WT-5&quot;      &quot;WT-6&quot;     
+ [7] &quot;WT-7&quot;      &quot;WT-8&quot;      &quot;WT-9&quot;      &quot;Delta-1&quot;   &quot;Delta-2&quot;   &quot;Delta-3&quot;  
+[13] &quot;Delta-4&quot;   &quot;Delta-5&quot;   &quot;Delta-6&quot;   &quot;Delta-7&quot;   &quot;Delta-8&quot;   &quot;Delta-9&quot;  
+[19] &quot;Omicron-1&quot; &quot;Omicron-2&quot; &quot;Omicron-3&quot; &quot;Omicron-4&quot; &quot;Omicron-5&quot; &quot;Omicron-6&quot;
+[25] &quot;Omicron-7&quot; &quot;Omicron-8&quot; &quot;Omicron-9&quot;</code></pre>
+<p>Now you are ready to set the annotation following the commands below:</p>
+<pre class="r"><code>&gt;   annotation_col= data.frame(Datatype = factor(rep(c(&quot;WT&quot;,&quot;Delta&quot;,&quot;omi&quot;),c(9,9,9))))
+&gt;   rownames(annotation_col) = colnames(output.data)
+&gt;   ann_colors = list(Datatype = c(WT=&quot;#3567E5&quot;,Delta=&quot;#B0E65E&quot;,omi=&quot;#91726B&quot;))</code></pre>
+</div>
+<div id="set-legend-breaks" class="section level3">
+<h3>set legend breaks</h3>
+<p>The <code>break</code> argument is quite important for the output format of your heatmap, as it determines the representative color for your data at certain scale. Here we use a <code>bk</code> factor to set it.</p>
+<pre class="r"><code>&gt;  bk = seq(-2,5,by = 1)</code></pre>
+</div>
+<div id="draw-your-heatmap" class="section level3">
+<h3>draw your heatmap</h3>
+<p>Finally, we reach here.</p>
+<pre class="r"><code>&gt;  #heatmap
+&gt;   p1 &lt;- pheatmap(output.data,  # your prepared data
++                  color = c(colorRampPalette(c(&#39;#C6DAF1&#39;,&#39;white&#39;,&#39;red&#39;),bias = 1.7)(6)), 
++                  # set colors, here I make 6 colors between light blue and red
++                  border_color = &quot;black&quot;,  #set border color，NA means no border
++                  scale= &quot;none&quot;, 
++                  # &quot;column&quot; indicates z-score standardization for each column,
++                  # &quot;row&quot; indicates z-score standardization for each row,
++                  # &quot;none&quot; indicates no standardization, 
++                  # we chose &quot;none&quot; here because we have done it in previous steps.
++                  cluster_rows = TRUE, # whether cluster by rows
++                  cluster_cols = FALSE, # whether cluster by columns
++                  legend = TRUE, # display legends or not
++                  breaks = bk, # set breaks here 
++                  legend_breaks = c(-2:5), # set legend breaks here 
++                  legend_labels = c(-2:5), # set labels at legend breaks
++                  show_rownames = FALSE, 
++                  show_colnames = FALSE, 
++                  display_numbers = FALSE,
++                  fontsize = 10, # set the font size
++                  annotation_col =annotation_col,
++                  annotation_colors = ann_colors,
++                  angle_col = 0,
++                  cutree_rows=4, # break heatmap by clustering result
++   )</code></pre>
+<p><img src="/blog/ADE_heatmap/ADE_heatmap_illustration_files/figure-html/unnamed-chunk-15-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>We did it! Now enjoy your heatmap!</p>
+</div>
+<div id="save-your-heatmap" class="section level3">
+<h3>save your heatmap</h3>
+<pre class="r"><code>&gt;  ggsave(file = outputpath, plot = p1,width = 11,height = 10,dpi = 300)</code></pre>
+</div>
+</div>

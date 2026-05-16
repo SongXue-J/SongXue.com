@@ -1,0 +1,189 @@
+theme: "hextra"
+# Configuration
+baseURL: "/"
+title: "SongXue|Blog"
+
+enableRobotsTXT: true
+# Parse Git commit
+enableGitInfo: false
+# enableEmoji: false
+hasCJKLanguage: true
+
+# services:
+#   googleAnalytics:
+#     ID: G-MEASUREMENT_ID
+
+outputs:
+  home: [HTML]
+  page: [HTML]
+  section: [HTML, RSS]
+
+defaultContentLanguage: en
+languages:
+  en:
+    languageName: English
+    weight: 1
+    title: SongXue
+  zh-cn:
+    languageName: 简体中文
+    languageCode: zh-CN
+    weight: 2
+    title: 薛嵩的个人主页
+
+module:
+  hugoVersion:
+    extended: true
+    min: "0.112.0"
+
+  workspace: hugo.work
+  imports:
+    - path: github.com/imfing/hextra
+
+markup:
+  highlight:
+    noClasses: false
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      passthrough:
+        delimiters:
+          block: [['\[', '\]'], ['$$', '$$']]
+          inline: [['\(', '\)']]
+        enable: true
+
+enableInlineShortcodes: true
+
+taxonomies:
+  category: categories
+  tag: tags
+  series: series
+
+menu:
+  main:
+    - identifier: blog
+      name: Blog
+      pageRef: /blog
+      weight: 1
+    - identifier: about
+      name: About
+      pageRef: /about
+      weight: 2
+    - identifier: cv
+      name: CV
+      pageRef: /cv
+      weight: 3
+    - name: Search
+      weight: 4
+      params:
+        type: search
+    - name: GitHub
+      weight: 5
+      url: "https://github.com/SongXue-J"
+      params:
+        icon: github
+
+  sidebar:
+    - identifier: more
+      name: More
+      params:
+        type: separator
+      weight: 1
+    - identifier: about
+      name: "About"
+      pageRef: "/about"
+      weight: 2
+    - identifier: cv
+      name: "CV"
+      pageRef: "/cv"
+      weight: 3
+
+params:
+  description: Personal academic blog — pathogen & humoral immunity research, R data science, single-cell sequencing, and AI workflows
+
+  navbar:
+    displayTitle: true
+    displayLogo: true
+    logo:
+      path: images/XS_logo_light.svg
+      dark: images/XS_logo_light.svg
+      width: 40
+      height: 40
+      # link: /
+    width: wide
+
+  page:
+    # full (100%), wide (90rem), normal (1280px)
+    width: normal
+
+  theme:
+    # light | dark | system
+    default: system
+    displayToggle: true
+
+  footer:
+    enable: true
+    displayCopyright: true
+    displayPoweredBy: true
+    width: normal
+
+  # Display the last modification date
+  displayUpdatedDate: true
+  dateFormat: "January 2, 2006"
+
+  # Search
+  # flexsearch is enabled by default
+  search:
+    enable: true
+    type: flexsearch
+
+    flexsearch:
+      # index page by: content | summary | heading | title
+      index: content
+      # full | forward | reverse | strict
+      # https://github.com/nextapps-de/flexsearch/#tokenizer-prefix-search
+      tokenize: forward
+
+  editURL:
+    enable: False
+    base: "https://github.com/imfing/hextra/edit/main/exampleSite/content"
+
+  blog:
+    list:
+      displayTags: true
+      # date | lastmod | publishDate | title | weight
+      sortBy: date
+      sortOrder: desc # or "asc"
+
+  highlight:
+    copy:
+      enable: true
+      # hover | always
+      display: hover
+
+  comments:
+    enable: true
+    type: giscus
+
+    # https://giscus.app/
+    giscus:
+      repo: SongXue-J/SongXue.com
+      repoId: ""
+      category: General
+      categoryId: ""
+      # mapping: pathname
+      # strict: 0
+      # reactionsEnabled: 1
+      # emitMetadata: 0
+      # inputPosition: top
+      # lang: en
+      # theme: noborder_dark
+      
+  ignoreFiles:
+    - \.Rmd$
+    - \.Rmarkdown$
+    - _cache$
+    - \.knit\.md$
+    - \.utf8\.md$
+    - ^_reference
+  

@@ -1,0 +1,185 @@
+---
+title: "ADE Heatmap illustration"
+author: "Song Xue"
+date: "`r Sys.Date()`"
+categories: ["R"]
+tags:
+- R Markdown
+- plot
+---
+
+```{r setup, include=FALSE}
+## Global options
+knitr::opts_chunk$set(prompt = TRUE, comment = '', collapse = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+```
+
+## Introduciton
+
+This R Markdown document describes how to merge multiple values from different assays to create heatmaps to visualize the features of each antibody-variant pair. 
+
+<!--more-->
+
+The following steps present how to read data from excel files, merge them together and use them to make a pretty heatmap.
+
+## Prepare R packages
+
+I need __readxl__ and __writexl__ to input/output data, __dplyr__ and __scales__ to process data, and __pheatmap__, __ggplot2__, __tidyverse__ to create graphs: 
+```{r}
+library(readxl)
+library(writexl)
+library(scales)
+library(pheatmap)
+library(ggplot2)
+library(tidyverse)
+```
+
+## Process data
+### set input file or folder path 
+```{r}
+input_file_path = "./serum_dataset/vaccine serum samples-wt delta omi.xlsx"
+input_folder_path = "./serum_dataset"
+# replace it with your file or folder path
+```
+Usually, I'd like to export the graphs to the same folder as the input files :
+```{r}
+outputpath = paste0(dirname(input_file_path),"\\heatmap.pdf") 
+```
+This `outputpath` will be named as __"heatmap.pdf"__ in the same folder as the input file:
+```{r,echo=FALSE}
+outputpath
+```
+If you chose folder path as input, the `outputpath` should be as same as the `input_folder_path`:
+```{r,eval=FALSE}
+outputpath = input_folder_path
+outputpath
+```
+### read data
+Importantly, make sure the data in your excel files looks like this:
+```{r, echo=FALSE}
+test = read_excel(input_file_path)
+knitr::kable(head(test),digits = 2,align = rep('c',length(colnames(test))))
+```
+The __Sample__ column will be used as the key to merge data together.
+If your data format matches the example above, we can read it by these following commands:
+
+- If your data is stored in different excel files which contains only __one__ sheet:
+```{r}
+file_names <- list.files(input_folder_path, pattern = "\\.xlsx$|\\.xls$", full.names = TRUE)
+merged.data = list()
+for (i in 1:length(file_names)) {
+    # read data in excel files
+    data <- read_excel(file_names[i])
+    colnames(data)[1] = "sample"
+    # merge data together 
+    merged.data[[i]] = data
+}
+merged_df = merged.data[[1]]
+```
+
+Let's take a look at the output `merged_df`:
+
+It's a dataframe:
+```{r}
+class(merged_df)
+```
+
+### data processing 
+This `merged_df` will be used as the input to undergo further processing, including __merge batches__, __omit `NA` value__ and __normalization__
+
+#### __merge batches__ and __omit `NA` value__
+```{r,echo=FALSE}
+colnames(merged_df)
+```
+#### __normalization__ using Z-score
+Z-score is usually used to perform standardization. [Here](https://zhuanlan.zhihu.com/p/69074703) is a detailed explanation about its definition. Briefly, we here use __(x-μ)/σ__ to calculate the z-score of __Binding__, __Neutralization__, __ADE__ and __Competition ELISA__ assays respectively.
+
+```{r}
+output.data = merged_df %>% na.omit()
+rownames(output.data) = output.data$sample
+output.data$sample = NULL
+```
+
+Take a look at the `outout.data`:
+```{r,echo=FALSE}
+knitr::kable(head(output.data[,1:9],2),digits = 2,align = 'c')
+```
+
+## Create Heatmap
+Now you have already gotten your data for make heatmap, but there are still some more things to do.
+
+###  annotate columns and rows  
+
+Note that the column annotations __must__ match the order in your `output.data`.   
+So you may want to double-check how your `output.data` arranges:
+```{r}
+colnames(output.data)
+```
+Now you are ready to set the annotation following the commands below:
+```{r}
+  annotation_col= data.frame(Datatype = factor(rep(c("WT","Delta","omi"),c(9,9,9))))
+  rownames(annotation_col) = colnames(output.data)
+  ann_colors = list(Datatype = c(WT="#3567E5",Delta="#B0E65E",omi="#91726B"))
+```
+###  set legend breaks
+The `break` argument is quite important for the output format of your heatmap, as it determines the representative color for your data at certain scale. Here we use a `bk` factor to set it.
+```{r}
+ bk = seq(-2,5,by = 1)
+```
+###  draw your heatmap
+Finally, we reach here.
+```{r,fig.align='center',fig.height=20,fig.width=20}
+ #heatmap
+  p1 <- pheatmap(output.data,  # your prepared data
+                 color = c(colorRampPalette(c('#C6DAF1','white','red'),bias = 1.7)(6)), 
+                 # set colors, here I make 6 colors between light blue and red
+                 border_color = "black",  #set border color，NA means no border
+                 scale= "none", 
+                 # "column" indicates z-score standardization for each column,
+                 # "row" indicates z-score standardization for each row,
+                 # "none" indicates no standardization, 
+                 # we chose "none" here because we have done it in previous steps.
+                 cluster_rows = TRUE, # whether cluster by rows
+                 cluster_cols = FALSE, # whether cluster by columns
+                 legend = TRUE, # display legends or not
+                 breaks = bk, # set breaks here 
+                 legend_breaks = c(-2:5), # set legend breaks here 
+                 legend_labels = c(-2:5), # set labels at legend breaks
+                 show_rownames = FALSE, 
+                 show_colnames = FALSE, 
+                 display_numbers = FALSE,
+                 fontsize = 10, # set the font size
+                 annotation_col =annotation_col,
+                 annotation_colors = ann_colors,
+                 angle_col = 0,
+                 cutree_rows=4, # break heatmap by clustering result
+  )
+```
+
+We did it! Now enjoy your heatmap!
+
+
+###  save your heatmap  
+```{r,eval=FALSE}
+ ggsave(file = outputpath, plot = p1,width = 11,height = 10,dpi = 300)
+```
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

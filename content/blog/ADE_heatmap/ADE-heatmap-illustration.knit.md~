@@ -1,0 +1,87 @@
+---
+title: "ADE Heatmap illustration"
+author: "Song Xue"
+categories: ["R"]
+date: 'Compiled: 2025-02-17'
+tags: ["R Markdown", "plot", "regression"]
+---
+
+
+
+## Introduciton
+
+This R Markdown document describes how to merge multiple values from different assays  
+(e.g. __Binding__, __Neutralization__, __ADE__ and __Competition ELISA__)  
+to create heatmaps to visualize the features of each antibody-variant pair. 
+
+The following steps present how to read data from excel files, merge them together and use them to make a pretty heatmap.
+
+## Prepare R packages
+
+I need __readxl__ and __writexl__ to input/output data, __dplyr__ and __scales__ to process data, and __pheatmap__, __ggplot2__, __tidyverse__ to create graphs: 
+
+``` r
+> library(readxl)
+> library(writexl)
+> library(scales)
+> library(pheatmap)
+> library(ggplot2)
+> library(tidyverse)
+```
+
+## Process data
+### set input file or folder path 
+
+``` r
+> input_file_path = "/serum_dataset/vaccine serum samples-wt delta omi.xlsx"
+> input_folder_path = "/serum_dataset"
+> # replace it with your file or folder path
+```
+Usually, I'd like to export the graphs to the same folder as the input files :
+
+``` r
+> outputpath = paste0(dirname(input_file_path),"\\heatmap.pdf") 
+```
+This `outputpath` will be named as __"heatmap.pdf"__ in the same folder as the input file:
+
+```
+[1] "E:/WQ LAB/ADE/ELISA assay\\heatmap.pdf"
+```
+If you chose folder path as input, the `outputpath` should be as same as the `input_folder_path`:
+
+``` r
+> outputpath = input_folder_path
+> outputpath
+```
+### read data
+Importantly, make sure the data in your excel files looks like this:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,432 @@
+---
+title: "利用pheatmap制作热图"
+author: "薛嵩"
+date: "2026-01-29"
+categories: ["R"]
+tags:
+- 制图
+---
+
+
+
+<p>这篇文章描述了如何合并来自不同实验的多个值以创建热图的方法。</p>
+<!--more-->
+<p>以下步骤展示了如何从 Excel 文件中读取数据，将其合并并用于制作美观的热图。</p>
+<div id="准备-r-包" class="section level2">
+<h2>准备 R 包</h2>
+<p>需要以下 R 包：<br />
+- <strong>readxl</strong> 和 <strong>writexl</strong> 用于输入/输出数据<br />
+- <strong>dplyr</strong> 和 <strong>scales</strong> 用于处理数据<br />
+- <strong>pheatmap</strong>、<strong>ggplot2</strong> 和 <strong>tidyverse</strong> 用于绘图</p>
+<pre class="r"><code>library(readxl)
+library(writexl)
+library(scales)
+library(pheatmap)
+library(ggplot2)
+library(tidyverse)</code></pre>
+</div>
+<div id="数据处理" class="section level2">
+<h2>数据处理</h2>
+<div id="设置输入文件或文件夹路径" class="section level3">
+<h3>设置输入文件或文件夹路径</h3>
+<pre class="r"><code>input_file_path = &quot;./serum_dataset/vaccine serum samples-wt delta omi.xlsx&quot;
+input_folder_path = &quot;./serum_dataset&quot;
+# 替换为您的文件或文件夹路径</code></pre>
+<p>通常，我会将图表导出到与输入文件相同的文件夹中：</p>
+<pre class="r"><code>outputpath = paste0(dirname(input_file_path),&quot;\\heatmap.pdf&quot;) </code></pre>
+<p>此 <code>outputpath</code> 将命名为 <strong>“heatmap.pdf”</strong>，并保存在与输入文件相同的文件夹中：</p>
+<pre><code>[1] &quot;./serum_dataset\\heatmap.pdf&quot;</code></pre>
+<p>如果选择文件夹路径作为输入，则 <code>outputpath</code> 应与 <code>input_folder_path</code> 相同：</p>
+<pre class="r"><code>outputpath = input_folder_path
+outputpath</code></pre>
+</div>
+<div id="读取数据" class="section level3">
+<h3>读取数据</h3>
+<p>确保您的 Excel 文件中的数据格式如下所示：</p>
+<table style="width:100%;">
+<colgroup>
+<col width="3%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">sample</th>
+<th align="center">WT-1</th>
+<th align="center">WT-2</th>
+<th align="center">WT-3</th>
+<th align="center">WT-4</th>
+<th align="center">WT-5</th>
+<th align="center">WT-6</th>
+<th align="center">WT-7</th>
+<th align="center">WT-8</th>
+<th align="center">WT-9</th>
+<th align="center">Delta-1</th>
+<th align="center">Delta-2</th>
+<th align="center">Delta-3</th>
+<th align="center">Delta-4</th>
+<th align="center">Delta-5</th>
+<th align="center">Delta-6</th>
+<th align="center">Delta-7</th>
+<th align="center">Delta-8</th>
+<th align="center">Delta-9</th>
+<th align="center">Omicron-1</th>
+<th align="center">Omicron-2</th>
+<th align="center">Omicron-3</th>
+<th align="center">Omicron-4</th>
+<th align="center">Omicron-5</th>
+<th align="center">Omicron-6</th>
+<th align="center">Omicron-7</th>
+<th align="center">Omicron-8</th>
+<th align="center">Omicron-9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">249</td>
+<td align="center">3490</td>
+<td align="center">3566</td>
+<td align="center">3701</td>
+<td align="center">3823</td>
+<td align="center">3796</td>
+<td align="center">3779</td>
+<td align="center">4106</td>
+<td align="center">6278</td>
+<td align="center">11691</td>
+<td align="center">2318</td>
+<td align="center">2265</td>
+<td align="center">2270</td>
+<td align="center">2361</td>
+<td align="center">2399</td>
+<td align="center">2625</td>
+<td align="center">4045</td>
+<td align="center">19085</td>
+<td align="center">42810</td>
+<td align="center">2688</td>
+<td align="center">2691</td>
+<td align="center">2608</td>
+<td align="center">2743</td>
+<td align="center">2742</td>
+<td align="center">2697</td>
+<td align="center">2756</td>
+<td align="center">3168</td>
+<td align="center">10036</td>
+</tr>
+<tr class="even">
+<td align="center">NA</td>
+<td align="center">3236</td>
+<td align="center">3265</td>
+<td align="center">3310</td>
+<td align="center">3453</td>
+<td align="center">3100</td>
+<td align="center">2996</td>
+<td align="center">3179</td>
+<td align="center">10101</td>
+<td align="center">17397</td>
+<td align="center">2160</td>
+<td align="center">2154</td>
+<td align="center">2158</td>
+<td align="center">2899</td>
+<td align="center">2047</td>
+<td align="center">2424</td>
+<td align="center">6343</td>
+<td align="center">10983</td>
+<td align="center">41618</td>
+<td align="center">2550</td>
+<td align="center">2473</td>
+<td align="center">2521</td>
+<td align="center">2474</td>
+<td align="center">2317</td>
+<td align="center">2331</td>
+<td align="center">2356</td>
+<td align="center">3451</td>
+<td align="center">7322</td>
+</tr>
+<tr class="odd">
+<td align="center">230</td>
+<td align="center">2384</td>
+<td align="center">2528</td>
+<td align="center">2675</td>
+<td align="center">2620</td>
+<td align="center">2673</td>
+<td align="center">2764</td>
+<td align="center">4490</td>
+<td align="center">10318</td>
+<td align="center">18427</td>
+<td align="center">1879</td>
+<td align="center">2515</td>
+<td align="center">1857</td>
+<td align="center">1938</td>
+<td align="center">2726</td>
+<td align="center">4257</td>
+<td align="center">12521</td>
+<td align="center">23052</td>
+<td align="center">57013</td>
+<td align="center">2255</td>
+<td align="center">2264</td>
+<td align="center">2126</td>
+<td align="center">2276</td>
+<td align="center">2062</td>
+<td align="center">2187</td>
+<td align="center">2262</td>
+<td align="center">2363</td>
+<td align="center">5507</td>
+</tr>
+<tr class="even">
+<td align="center">NA</td>
+<td align="center">2394</td>
+<td align="center">2296</td>
+<td align="center">2315</td>
+<td align="center">2243</td>
+<td align="center">2376</td>
+<td align="center">3073</td>
+<td align="center">5018</td>
+<td align="center">14496</td>
+<td align="center">18438</td>
+<td align="center">1852</td>
+<td align="center">1869</td>
+<td align="center">1849</td>
+<td align="center">1792</td>
+<td align="center">1907</td>
+<td align="center">4469</td>
+<td align="center">16023</td>
+<td align="center">23121</td>
+<td align="center">29738</td>
+<td align="center">2121</td>
+<td align="center">2088</td>
+<td align="center">2464</td>
+<td align="center">2183</td>
+<td align="center">2036</td>
+<td align="center">1983</td>
+<td align="center">1931</td>
+<td align="center">2320</td>
+<td align="center">4665</td>
+</tr>
+<tr class="odd">
+<td align="center">244</td>
+<td align="center">1958</td>
+<td align="center">1936</td>
+<td align="center">2026</td>
+<td align="center">2005</td>
+<td align="center">1976</td>
+<td align="center">2474</td>
+<td align="center">2137</td>
+<td align="center">4656</td>
+<td align="center">11394</td>
+<td align="center">1698</td>
+<td align="center">2007</td>
+<td align="center">1678</td>
+<td align="center">1796</td>
+<td align="center">1647</td>
+<td align="center">1795</td>
+<td align="center">3571</td>
+<td align="center">9030</td>
+<td align="center">30330</td>
+<td align="center">2038</td>
+<td align="center">1889</td>
+<td align="center">2044</td>
+<td align="center">1917</td>
+<td align="center">1911</td>
+<td align="center">2243</td>
+<td align="center">2243</td>
+<td align="center">2969</td>
+<td align="center">6628</td>
+</tr>
+<tr class="even">
+<td align="center">NA</td>
+<td align="center">1832</td>
+<td align="center">1921</td>
+<td align="center">1920</td>
+<td align="center">1790</td>
+<td align="center">1854</td>
+<td align="center">1996</td>
+<td align="center">2062</td>
+<td align="center">3999</td>
+<td align="center">10572</td>
+<td align="center">1703</td>
+<td align="center">1662</td>
+<td align="center">1543</td>
+<td align="center">1523</td>
+<td align="center">1683</td>
+<td align="center">3228</td>
+<td align="center">3715</td>
+<td align="center">7058</td>
+<td align="center">20046</td>
+<td align="center">1858</td>
+<td align="center">1881</td>
+<td align="center">1799</td>
+<td align="center">1760</td>
+<td align="center">1749</td>
+<td align="center">1736</td>
+<td align="center">1984</td>
+<td align="center">2797</td>
+<td align="center">8719</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample</strong> 列将用作合并数据的关键列。<br />
+如果您的数据格式与上述示例匹配，可以通过以下命令读取数据：</p>
+<ul>
+<li>如果您的数据存储在不同的 Excel 文件中，并且每个文件仅包含 <strong>一个</strong> 工作表：</li>
+</ul>
+<pre class="r"><code>file_names &lt;- list.files(input_folder_path, pattern = &quot;\\.xlsx$|\\.xls$&quot;, full.names = TRUE)
+merged.data = list()
+for (i in 1:length(file_names)) {
+    # 读取 Excel 文件中的数据
+    data &lt;- read_excel(file_names[i])
+    colnames(data)[1] = &quot;sample&quot;
+    # 合并数据
+    merged.data[[i]] = data
+}
+merged_df = merged.data[[1]]</code></pre>
+<p>让我们看一下输出的 <code>merged_df</code>：</p>
+<p>这是一个数据框：</p>
+<pre class="r"><code>class(merged_df)
+[1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+</div>
+<div id="数据处理-1" class="section level3">
+<h3>数据处理</h3>
+<p>此 <code>merged_df</code> 将作为输入进行进一步处理，包括 <strong>合并批次</strong>、<strong>去除 <code>NA</code> 值</strong> 和 <strong>标准化</strong>。</p>
+<div id="合并批次-和-去除-na-值" class="section level4">
+<h4><strong>合并批次</strong> 和 <strong>去除 <code>NA</code> 值</strong></h4>
+<pre><code> [1] &quot;sample&quot;    &quot;WT-1&quot;      &quot;WT-2&quot;      &quot;WT-3&quot;      &quot;WT-4&quot;      &quot;WT-5&quot;     
+ [7] &quot;WT-6&quot;      &quot;WT-7&quot;      &quot;WT-8&quot;      &quot;WT-9&quot;      &quot;Delta-1&quot;   &quot;Delta-2&quot;  
+[13] &quot;Delta-3&quot;   &quot;Delta-4&quot;   &quot;Delta-5&quot;   &quot;Delta-6&quot;   &quot;Delta-7&quot;   &quot;Delta-8&quot;  
+[19] &quot;Delta-9&quot;   &quot;Omicron-1&quot; &quot;Omicron-2&quot; &quot;Omicron-3&quot; &quot;Omicron-4&quot; &quot;Omicron-5&quot;
+[25] &quot;Omicron-6&quot; &quot;Omicron-7&quot; &quot;Omicron-8&quot; &quot;Omicron-9&quot;</code></pre>
+</div>
+<div id="使用-z-score-进行标准化" class="section level4">
+<h4>使用 Z-score 进行标准化</h4>
+<p>Z-score通常用于标准化。<a href="https://zhuanlan.zhihu.com/p/69074703">这里</a>是其定义的详细解释。简单来说，我们使用公式 <strong>(x-μ)/σ</strong> 分别计算 <strong>Binding</strong>、<strong>Neutralization</strong>、<strong>ADE</strong> 和 <strong>Competition ELISA</strong> 实验的 Z-score。</p>
+<pre class="r"><code>output.data = merged_df %&gt;% na.omit()
+rownames(output.data) = output.data$sample
+output.data$sample = NULL</code></pre>
+<p>查看 <code>output.data</code>：</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">WT-1</th>
+<th align="center">WT-2</th>
+<th align="center">WT-3</th>
+<th align="center">WT-4</th>
+<th align="center">WT-5</th>
+<th align="center">WT-6</th>
+<th align="center">WT-7</th>
+<th align="center">WT-8</th>
+<th align="center">WT-9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">3490</td>
+<td align="center">3566</td>
+<td align="center">3701</td>
+<td align="center">3823</td>
+<td align="center">3796</td>
+<td align="center">3779</td>
+<td align="center">4106</td>
+<td align="center">6278</td>
+<td align="center">11691</td>
+</tr>
+<tr class="even">
+<td align="center">2384</td>
+<td align="center">2528</td>
+<td align="center">2675</td>
+<td align="center">2620</td>
+<td align="center">2673</td>
+<td align="center">2764</td>
+<td align="center">4490</td>
+<td align="center">10318</td>
+<td align="center">18427</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+</div>
+</div>
+<div id="创建热图" class="section level2">
+<h2>创建热图</h2>
+<p>现在您已经准备好数据来制作热图，但仍需完成一些设置。</p>
+<div id="注释列和行" class="section level3">
+<h3>注释列和行</h3>
+<p>注意，列注释必须与 <code>output.data</code> 中的顺序匹配。<br />
+因此，您可能需要仔细检查 <code>output.data</code> 的排列方式：</p>
+<pre class="r"><code>colnames(output.data)
+ [1] &quot;WT-1&quot;      &quot;WT-2&quot;      &quot;WT-3&quot;      &quot;WT-4&quot;      &quot;WT-5&quot;      &quot;WT-6&quot;     
+ [7] &quot;WT-7&quot;      &quot;WT-8&quot;      &quot;WT-9&quot;      &quot;Delta-1&quot;   &quot;Delta-2&quot;   &quot;Delta-3&quot;  
+[13] &quot;Delta-4&quot;   &quot;Delta-5&quot;   &quot;Delta-6&quot;   &quot;Delta-7&quot;   &quot;Delta-8&quot;   &quot;Delta-9&quot;  
+[19] &quot;Omicron-1&quot; &quot;Omicron-2&quot; &quot;Omicron-3&quot; &quot;Omicron-4&quot; &quot;Omicron-5&quot; &quot;Omicron-6&quot;
+[25] &quot;Omicron-7&quot; &quot;Omicron-8&quot; &quot;Omicron-9&quot;</code></pre>
+<p>现在，您可以按照以下命令设置注释：</p>
+<pre class="r"><code>  annotation_col= data.frame(Datatype = factor(rep(c(&quot;WT&quot;,&quot;Delta&quot;,&quot;omi&quot;),c(9,9,9))))
+  rownames(annotation_col) = colnames(output.data)
+  ann_colors = list(Datatype = c(WT=&quot;#3567E5&quot;,Delta=&quot;#B0E65E&quot;,omi=&quot;#91726B&quot;))</code></pre>
+</div>
+<div id="设置图例分段" class="section level3">
+<h3>设置图例分段</h3>
+<p><code>break</code> 参数对热图的输出格式非常重要，因为它决定了数据在特定范围内的代表颜色。这里我们使用一个 <code>bk</code> 因子来设置它。</p>
+<pre class="r"><code> bk = seq(-2,5,by = 1)</code></pre>
+</div>
+<div id="绘制热图" class="section level3">
+<h3>绘制热图</h3>
+<p>最后，我们到达了这一步：</p>
+<pre class="r"><code> # 热图
+  p1 &lt;- pheatmap(output.data,  # 您准备好的数据
+                 color = c(colorRampPalette(c(&#39;#C6DAF1&#39;,&#39;white&#39;,&#39;red&#39;),bias = 1.7)(6)), 
+                 # 设置颜色，这里我在浅蓝色和红色之间设置了 6 种颜色
+                 border_color = &quot;black&quot;,  # 设置边框颜色，NA 表示无边框
+                 scale= &quot;none&quot;, 
+                 # &quot;column&quot; 表示对每列进行 Z-score 标准化，
+                 # &quot;row&quot; 表示对每行进行 Z-score 标准化，
+                 # &quot;none&quot; 表示不进行标准化，
+                 # 我们选择 &quot;none&quot;，因为之前已经完成了标准化。
+                 cluster_rows = TRUE, # 是否按行聚类
+                 cluster_cols = FALSE, # 是否按列聚类
+                 legend = TRUE, # 是否显示图例
+                 breaks = bk, # 设置分段
+                 legend_breaks = c(-2:5), # 设置图例分段
+                 legend_labels = c(-2:5), # 设置图例分段的标签
+                 show_rownames = FALSE, 
+                 show_colnames = FALSE, 
+                 display_numbers = FALSE,
+                 fontsize = 10, # 设置字体大小
+                 annotation_col =annotation_col,
+                 annotation_colors = ann_colors,
+                 angle_col = 0,
+                 cutree_rows=4, # 按聚类结果分割热图
+  )</code></pre>
+<p><img src="/blog/ADE_heatmap/heatmap.zh-cn_files/figure-html/unnamed-chunk-15-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>我们完成了！现在享受您的热图吧！</p>
+<hr />
+</div>
+<div id="保存热图" class="section level3">
+<h3>保存热图</h3>
+<pre class="r"><code> ggsave(file = outputpath, plot = p1,width = 11,height = 10,dpi = 300)</code></pre>
+</div>
+</div>
