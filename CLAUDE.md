@@ -49,10 +49,10 @@ hugo new blog/my-post/index.md # New post scaffold (if archetypes exist)
 
 ## Deployment
 
-- Push to `main` → GitHub Actions builds + deploys to GitHub Pages
+- Push to `main` → Netlify auto-deploys via `netlify.toml`
 - Repository: `github.com/SongXue-J/SongXue.com`
 - Custom domain: SongXue.com (pending purchase)
-- Netlify configured as fallback
+- Build command: `hugo`, publish dir: `public/`
 
 ## Subagent architecture
 

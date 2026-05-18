@@ -17,3 +17,7 @@ hugo server
 hugo --minify
 # → public/
 ```
+
+## Deploy
+
+Push to `main` → auto-deployed by [Netlify](https://www.netlify.com). Configuration in `netlify.toml`.
