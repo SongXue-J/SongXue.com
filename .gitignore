@@ -56,3 +56,7 @@ rsconnect/
 /.hugo_build.lock
 /hugo_stats.json
 
+# Local reference files (not deployed)
+/_reference
+/_lessons
+

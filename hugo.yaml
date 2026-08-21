@@ -77,8 +77,13 @@ menu:
       weight: 4
       params:
         type: search
-    - name: GitHub
+    - name: ORCID
       weight: 5
+      url: "https://orcid.org/0009-0006-5359-9928"
+      params:
+        icon: orcid
+    - name: GitHub
+      weight: 6
       url: "https://github.com/SongXue-J"
       params:
         icon: github
@@ -103,13 +108,7 @@ params:
 
   navbar:
     displayTitle: true
-    displayLogo: true
-    logo:
-      path: images/XS_logo_light.svg
-      dark: images/XS_logo_light.svg
-      width: 40
-      height: 40
-      # link: /
+    displayLogo: false
     width: wide
 
   page:
@@ -168,16 +167,15 @@ params:
     # https://giscus.app/
     giscus:
       repo: SongXue-J/SongXue.com
-      repoId: ""
-      category: General
-      categoryId: ""
-      # mapping: pathname
-      # strict: 0
-      # reactionsEnabled: 1
-      # emitMetadata: 0
-      # inputPosition: top
-      # lang: en
-      # theme: noborder_dark
+      repoId: "R_kgDON6wQOg"
+      category: Q&A
+      categoryId: "DIC_kwDON6wQOs4C_EcL"
+      mapping: url
+      strict: 0
+      reactionsEnabled: 1
+      emitMetadata: 0
+      inputPosition: top
+      theme: preferred_color_scheme
       
   ignoreFiles:
     - \.Rmd$
@@ -186,4 +184,5 @@ params:
     - \.knit\.md$
     - \.utf8\.md$
     - ^_reference
+    - ^_lessons
   

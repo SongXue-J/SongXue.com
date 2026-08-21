@@ -1,0 +1,53 @@
+{{/* Table of Contents — Left Side, h2 + h3 only */}}
+{{- $toc := .Params.toc | default true -}}
+{{- $onThisPage := (T "onThisPage") | default "On this page"}}
+
+<nav class="hextra-toc hx-hidden hx-shrink-0 xl:hx-block print:hx-hidden" style="width:16rem;padding:0 1rem 0 60px;margin:0;" aria-label="table of contents">
+  {{- if $toc }}
+    <div class="hextra-scrollbar hx-sticky hx-top-16 hx-overflow-y-auto hx-pr-4 hx-pt-6 hx-text-sm [hyphens:auto] hx-max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:hx--mr-4 rtl:hx--ml-4">
+      {{- with .Fragments.Headings -}}
+        <p class="hx-mb-4 hx-font-semibold hx-tracking-tight hx-text-gray-800 dark:hx-text-gray-200">{{ $onThisPage }}</p>
+        {{- range . -}}
+          <ul class="hx-border-l-2 hx-border-gray-200 dark:hx-border-neutral-700 hx-pl-0">
+            {{- with .Headings -}}{{ template "toc-left-h2" . }}{{- end -}}
+          </ul>
+        {{- end -}}
+      {{- end -}}
+
+      {{- if not .Fragments.Headings -}}
+        <p class="hx-text-gray-400 hx-text-xs">No headings found</p>
+      {{- end -}}
+    </div>
+  {{ end -}}
+</nav>
+
+{{/* h2 level */}}
+{{- define "toc-left-h2" -}}
+  {{- range . -}}
+    {{- if .Title }}
+      <li class="hx-my-0.5 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="hx-font-medium hx-text-gray-800 dark:hx-text-gray-200 hx-inline-block hx-py-1 hx-px-3 hx-text-sm hx-rounded hx-transition-colors hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hover:hx-bg-neutral-800 dark:hover:hx-text-gray-200 hx-w-full hx-break-words hx-no-underline" href="#{{ anchorize .ID }}">
+          {{- .Title | safeHTML | plainify | htmlUnescape }}
+        </a>
+        {{- with .Headings -}}
+          <ul class="hx-pl-4">
+            {{- template "toc-left-h3" . -}}
+          </ul>
+        {{- end -}}
+      </li>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* h3 level */}}
+{{- define "toc-left-h3" -}}
+  {{- range . -}}
+    {{- if .Title }}
+      <li class="hx-my-0.5">
+        <a class="hx-text-gray-500 dark:hx-text-gray-400 hx-inline-block hx-py-0.5 hx-px-3 hx-text-xs hx-rounded hx-transition-colors hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hover:hx-bg-neutral-800 dark:hover:hx-text-gray-200 hx-w-full hx-break-words hx-no-underline" href="#{{ anchorize .ID }}">
+          {{- .Title | safeHTML | plainify | htmlUnescape }}
+        </a>
+      </li>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

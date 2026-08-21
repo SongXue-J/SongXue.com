@@ -1,61 +1,63 @@
 ---
 title: "Song Xue"
 description: "Personal academic blog — pathogen & humoral immunity research, R data science, single-cell sequencing, and AI workflows"
+layout: hextra-home
 ---
 
 {{< hextra/hero-badge >}}
-  <span>Pathogen & Humoral Immunity Research</span>
-  {{< icon name="academic-cap" attributes="height=14" >}}
+  <div class="hx-w-2 hx-h-2 hx-rounded-full hx-bg-green-400 animate-pulse"></div>
+  <span>Ph.D. Student · Pathogen & Humoral Immunity</span>
+  {{< icon name="arrow-circle-right" attributes="height=14" >}}
 {{< /hextra/hero-badge >}}
 
 <div class="hx-mt-6 hx-mb-6">
 {{< hextra/hero-headline >}}
-  B cells, antibodies,<br class="sm:hx-hidden" /> and the data behind them
+  From B cells to bytes&nbsp;<br class="sm:hx-block hx-hidden" />
+  decoding immune responses with data
 {{< /hextra/hero-headline >}}
 </div>
 
 <div class="hx-mb-12">
 {{< hextra/hero-subtitle >}}
-  A research blog exploring humoral immunity through the lens of<br class="sm:hx-hidden" /> high-throughput sequencing, R data science, and computational tools
+  Exploring humoral immunity through high-throughput sequencing,<br class="sm:hx-block hx-hidden" />
+  R data science, and computational tools
 {{< /hextra/hero-subtitle >}}
 </div>
 
-<div class="hx-flex hx-flex-wrap hx-gap-4 hx-mb-16">
+<div class="hx-flex hx-flex-wrap hx-gap-4 hx-mb-6">
   {{< hextra/hero-button link="blog" text="Read the Blog" >}}
   {{< hextra/hero-button link="about" text="About Me" >}}
 </div>
 
----
+<div class="hx-mt-6"></div>
 
-## Blog Topics
-
-<div class="hx-grid hx-grid-cols-1 md:hx-grid-cols-2 hx-gap-4 hx-mt-8">
-
-{{< cards >}}
-  {{< card
-    link="/categories/r-visualization"
-    title="R 数据处理与可视化"
-    subtitle="Practical techniques for biological data analysis, heatmap generation, and reproducible workflows"
-    icon="chart-bar"
-  >}}
-  {{< card
-    link="/categories/single-cell"
-    title="高通量单细胞测序"
-    subtitle="Pipeline walkthroughs, paper reproductions, and best practices for scRNA-seq, TCR/BCR analysis"
-    icon="beaker"
-  >}}
-  {{< card
-    link="/categories/research-software"
-    title="科研软件使用技巧"
-    subtitle="FlowJo, ChimeraX, PyMOL, Schrödinger — tips and workflows for structural biology and immunology"
-    icon="desktop-computer"
-  >}}
-  {{< card
-    link="/categories/ai-workflow"
-    title="AI Agent 工作流构建"
-    subtitle="Building LLM-powered agents for literature mining, data analysis, and research automation"
+{{< hextra/feature-grid cols="2" >}}
+  {{< hextra/feature-card
+    title="AI Agent Workflows"
+    subtitle="Building LLM-powered agents for literature mining, automated data analysis, and research automation."
     icon="lightning-bolt"
+    link="/categories/ai-agent"
+    style="background: radial-gradient(ellipse at 50% 80%,rgba(194,97,254,0.15),hsla(0,0%,100%,0));"
   >}}
-{{< /cards >}}
-
-</div>
+  {{< hextra/feature-card
+    title="Tools & Tips"
+    subtitle="Research software tips, website building, productivity tools, and practical know-how."
+    icon="cube"
+    link="/categories/tools-tips"
+    style="background: radial-gradient(ellipse at 50% 80%,rgba(221,210,59,0.15),hsla(0,0%,100%,0));"
+  >}}
+  {{< hextra/feature-card
+    title="R Data Analysis & Visualization"
+    subtitle="Practical techniques for biological data analysis — heatmaps, ggplot2 workflows, and reproducible pipelines."
+    icon="chart-bar"
+    link="/categories/r-visualization"
+    style="background: radial-gradient(ellipse at 50% 80%,rgba(59,130,246,0.15),hsla(0,0%,100%,0));"
+  >}}
+  {{< hextra/feature-card
+    title="AI-mAb Literature Review"
+    subtitle="AI-driven antibody discovery, computational antibody engineering, and frontier progress in AI × antibody research."
+    icon="document-search"
+    link="/categories/ai-mab"
+    style="background: radial-gradient(ellipse at 50% 80%,rgba(142,53,74,0.15),hsla(0,0%,100%,0));"
+  >}}
+{{< /hextra/feature-grid >}}

@@ -1,0 +1,68 @@
+{{ define "main" }}
+  {{- $readMore := (T "readMore") | default "Read more →" -}}
+  {{- $lang := .Lang -}}
+  <div class="hx-mx-auto hx-flex {{ partial `utils/page-width` . }}">
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
+    <article class="hx-w-full hx-break-words hx-flex hx-min-h-[calc(100vh-var(--navbar-height))] hx-min-w-0 hx-justify-center hx-pb-8 hx-pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main class="hx-w-full hx-min-w-0 hx-max-w-6xl hx-px-6 hx-pt-4 md:hx-px-12">
+        <br class="hx-mt-1.5 hx-text-sm" />
+        {{ if .Title }}<h1 class="hx-text-center hx-mt-2 hx-text-4xl hx-font-bold hx-tracking-tight hx-text-slate-900 dark:hx-text-slate-100">{{ .Title }}</h1>{{ end }}
+        <div class="content">{{ .Content }}</div>
+        {{- $pages := partial "utils/sort-pages" (dict "page" . "by" site.Params.blog.list.sortBy "order" site.Params.blog.list.sortOrder) -}}
+        {{- $currentYear := 0 -}}
+        {{- range $pages }}
+          {{- $postYear := .Date.Year -}}
+          {{- if ne $postYear $currentYear }}
+            {{- $currentYear = $postYear }}
+            <div style="display:flex;align-items:center;gap:1rem;margin-top:2.5rem;margin-bottom:1.5rem;">
+              <div style="flex:1;border-top:1px solid #e5e7eb;"></div>
+              <span style="font-size:1.125rem;font-weight:bold;color:#9ca3af;white-space:nowrap;padding:0 0.5rem;">{{ $postYear }}</span>
+              <div style="flex:1;border-top:1px solid #e5e7eb;"></div>
+            </div>
+          {{- end }}
+          <div class="hx-mb-10">
+            <h3><a style="color: inherit; text-decoration: none;" class="hx-block hx-font-semibold hx-mt-8 hx-text-2xl " href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            {{- with .Params.categories }}
+              <p class="hx-mt-2 hx-mb-1">
+                {{- range . }}
+                  {{- $slug := . -}}
+                  {{- $displayName := . -}}
+                  {{- with index site.Data.categories . -}}
+                    {{- $displayName = index . $lang | default (index . "en") -}}
+                  {{- end -}}
+                  {{- $catLink := printf "/categories/%s/" (urlize $slug) | relLangURL -}}
+                  {{- $style := "background:#f3f4f6;color:#374151;" -}}
+                  {{- if eq $slug "ai-agent" -}}
+                    {{- $style = "background:rgba(194,97,254,0.15);color:#7c3aed;" -}}
+                  {{- else if eq $slug "tools-tips" -}}
+                    {{- $style = "background:rgba(221,210,59,0.15);color:#92400e;" -}}
+                  {{- else if eq $slug "r-visualization" -}}
+                    {{- $style = "background:rgba(59,130,246,0.15);color:#1d4ed8;" -}}
+                  {{- else if eq $slug "ai-mab" -}}
+                    {{- $style = "background:rgba(142,53,74,0.15);color:#9f1239;" -}}
+                  {{- end -}}
+                  <a href="{{ $catLink }}" style="{{ $style | safeCSS }}" class="hx-inline-block hx-rounded-full hx-px-3 hx-py-0.5 hx-text-xs hx-font-semibold hx-mr-2 hx-no-underline">{{ $displayName }}</a>
+                {{- end -}}
+              </p>
+            {{- end -}}
+            {{- if site.Params.blog.list.displayTags -}}
+              {{ with .Params.tags }}
+                <p class="hx-opacity-50 hx-text-sm hx-leading-7">
+                  {{- range . }}<a class="hx-inline-block hx-mr-2">#{{ . }}</a>{{ end -}}
+                </p>
+              {{ end -}}
+            {{- end -}}
+            <p class="hx-opacity-80 hx-mt-4 hx-leading-7">{{- partial "utils/page-description" . -}}</p>
+            <p class="hx-opacity-80 hx-mt-1 hx-leading-7">
+              <a class="hx-text-[color:hsl(var(--primary-hue),100%,50%)] hx-underline hx-underline-offset-2 hx-decoration-from-font" href="{{ .RelPermalink }}">
+                {{- $readMore -}}
+              </a>
+            </p>
+            <p class="hx-opacity-50 hx-text-sm hx-mt-4 hx-leading-7">{{ partial "utils/format-date" .Date }}</p>
+          </div>
+        {{ end -}}
+      </main>
+    </article>
+    <div class="max-xl:hx-hidden hx-h-0 hx-w-64 hx-shrink-0"></div>
+  </div>
+{{- end -}}
