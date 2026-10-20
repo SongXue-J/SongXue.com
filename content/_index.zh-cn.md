@@ -33,11 +33,18 @@ layout: hextra-home
 
 {{< hextra/feature-grid cols="2" >}}
   {{< hextra/feature-card
-    title="AI Agent 工作流"
+    title="AI 工作流"
     subtitle="构建 LLM 驱动的智能体：文献挖掘、自动数据分析与科研自动化。"
     icon="lightning-bolt"
     link="/categories/ai-agent"
     style="background: radial-gradient(ellipse at 50% 80%,rgba(194,97,254,0.15),hsla(0,0%,100%,0));"
+  >}}
+  {{< hextra/feature-card
+    title="实验方案与方法"
+    subtitle="湿实验 protocol 与方法学综述——从 PBMC 分离到血浆蛋白组定量方法。"
+    icon="beaker"
+    link="/categories/protocols"
+    style="background: radial-gradient(ellipse at 50% 80%,rgba(142,53,74,0.15),hsla(0,0%,100%,0));"
   >}}
   {{< hextra/feature-card
     title="工具与技巧"
@@ -47,17 +54,10 @@ layout: hextra-home
     style="background: radial-gradient(ellipse at 50% 80%,rgba(221,210,59,0.15),hsla(0,0%,100%,0));"
   >}}
   {{< hextra/feature-card
-    title="基于 R 的数据分析与可视化"
-    subtitle="生物数据分析实用技巧：热图绘制、ggplot2 工作流、可重复数据管道。"
+    title="数据分析与可视化"
+    subtitle="生物学数据分析实用技巧——系统发育树、测序 pipeline 与可重复可视化。"
     icon="chart-bar"
-    link="/categories/r-visualization"
+    link="/categories/data-analysis"
     style="background: radial-gradient(ellipse at 50% 80%,rgba(59,130,246,0.15),hsla(0,0%,100%,0));"
-  >}}
-  {{< hextra/feature-card
-    title="AI-mAb 文献综述与前沿进展"
-    subtitle="AI 驱动的抗体发现、计算抗体工程、AI × 抗体研究的前沿进展。"
-    icon="document-search"
-    link="/categories/ai-mab"
-    style="background: radial-gradient(ellipse at 50% 80%,rgba(142,53,74,0.15),hsla(0,0%,100%,0));"
   >}}
 {{< /hextra/feature-grid >}}

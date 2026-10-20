@@ -379,6 +379,10 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 
 ---
 
+{{< callout type="info" emoji="🤖" >}}
+**AI 使用声明**：本文由作者撰写，AI 工具（Claude）辅助完成初稿起草、中英互译与格式整理。作者已审校全部内容，并对准确性承担最终责任。
+{{< /callout >}}
+
 ## 资源链接
 
 | 资源 | 链接 |

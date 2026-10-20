@@ -36,9 +36,9 @@
                     {{- $style = "background:rgba(194,97,254,0.15);color:#7c3aed;" -}}
                   {{- else if eq $slug "tools-tips" -}}
                     {{- $style = "background:rgba(221,210,59,0.15);color:#92400e;" -}}
-                  {{- else if eq $slug "r-visualization" -}}
+                  {{- else if eq $slug "data-analysis" -}}
                     {{- $style = "background:rgba(59,130,246,0.15);color:#1d4ed8;" -}}
-                  {{- else if eq $slug "ai-mab" -}}
+                  {{- else if eq $slug "protocols" -}}
                     {{- $style = "background:rgba(142,53,74,0.15);color:#9f1239;" -}}
                   {{- end -}}
                   <a href="{{ $catLink }}" style="{{ $style | safeCSS }}" class="hx-inline-block hx-rounded-full hx-px-3 hx-py-0.5 hx-text-xs hx-font-semibold hx-mr-2 hx-no-underline">{{ $displayName }}</a>

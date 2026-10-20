@@ -466,6 +466,10 @@ This "soft guidance + hard interception" pattern is not limited to multimedia sc
 
 ---
 
+{{< callout type="info" emoji="🤖" >}}
+**AI disclosure**: This article was written by the author with assistance from Claude (Anthropic) for drafting, bilingual translation, and formatting. The author has reviewed all content and takes full responsibility for its accuracy.
+{{< /callout >}}
+
 ## References
 
 - 🔗 **GitHub (Original MCP Server)**: [https://github.com/congxxx/mimo-media-recognition-mcp](https://github.com/congxxx/mimo-media-recognition-mcp)

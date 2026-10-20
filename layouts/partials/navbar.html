@@ -33,6 +33,10 @@
         {{- partial "search.html" (dict "params" .Params) -}}
       {{- else -}}
         {{- $link := .URL -}}
+        {{- if .Params.hl -}}
+          {{- $hl := cond (eq site.Language.Lang "zh-cn") "zh-CN" "en" -}}
+          {{- $link = printf "%s&hl=%s" $link $hl -}}
+        {{- end -}}
         {{- $external := strings.HasPrefix $link "http" -}}
         {{- with .PageRef -}}
           {{- if hasPrefix . "/" -}}

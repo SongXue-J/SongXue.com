@@ -4,13 +4,13 @@
   {{- $displayName := .Title -}}
   {{- $path := .RelPermalink -}}
   {{- if in $path "ai-agent" -}}
-    {{- $displayName = cond (eq $lang "zh-cn") "AI Agent 工作流" "AI Agent Workflows" -}}
+    {{- $displayName = cond (eq $lang "zh-cn") "AI 工作流" "AI Workflows" -}}
   {{- else if in $path "tools-tips" -}}
     {{- $displayName = cond (eq $lang "zh-cn") "工具与技巧" "Tools & Tips" -}}
-  {{- else if in $path "r-visualization" -}}
-    {{- $displayName = cond (eq $lang "zh-cn") "基于 R 的数据分析与可视化" "R Data Analysis & Visualization" -}}
-  {{- else if in $path "ai-mab" -}}
-    {{- $displayName = cond (eq $lang "zh-cn") "AI-mAb 文献综述与前沿进展" "AI-mAb Literature Review" -}}
+  {{- else if in $path "data-analysis" -}}
+    {{- $displayName = cond (eq $lang "zh-cn") "数据分析与可视化" "Data Analysis & Visualization" -}}
+  {{- else if in $path "protocols" -}}
+    {{- $displayName = cond (eq $lang "zh-cn") "实验方案与方法" "Protocols & Methods" -}}
   {{- end -}}
   <div class="hx-mx-auto hx-flex {{ partial `utils/page-width` . }}">
     {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
@@ -31,16 +31,16 @@
                     {{- $style := "background:#f3f4f6;color:#374151;" -}}
                     {{- if eq $slug "ai-agent" -}}
                       {{- $style = "background:rgba(194,97,254,0.15);color:#7c3aed;" -}}
-                      {{- $catName = cond (eq $lang "zh-cn") "AI Agent 工作流" "AI Agent Workflows" -}}
+                      {{- $catName = cond (eq $lang "zh-cn") "AI 工作流" "AI Workflows" -}}
                     {{- else if eq $slug "tools-tips" -}}
                       {{- $style = "background:rgba(221,210,59,0.15);color:#92400e;" -}}
                       {{- $catName = cond (eq $lang "zh-cn") "工具与技巧" "Tools & Tips" -}}
-                    {{- else if eq $slug "r-visualization" -}}
+                    {{- else if eq $slug "data-analysis" -}}
                       {{- $style = "background:rgba(59,130,246,0.15);color:#1d4ed8;" -}}
-                      {{- $catName = cond (eq $lang "zh-cn") "基于 R 的数据分析与可视化" "R Data Analysis & Visualization" -}}
-                    {{- else if eq $slug "ai-mab" -}}
+                      {{- $catName = cond (eq $lang "zh-cn") "数据分析与可视化" "Data Analysis & Visualization" -}}
+                    {{- else if eq $slug "protocols" -}}
                       {{- $style = "background:rgba(142,53,74,0.15);color:#9f1239;" -}}
-                      {{- $catName = cond (eq $lang "zh-cn") "AI-mAb 文献综述与前沿进展" "AI-mAb Literature Review" -}}
+                      {{- $catName = cond (eq $lang "zh-cn") "实验方案与方法" "Protocols & Methods" -}}
                     {{- end -}}
                     <a href="{{ $catLink }}" style="{{ $style | safeCSS }}" class="hx-inline-block hx-rounded-full hx-px-3 hx-py-0.5 hx-text-xs hx-font-semibold hx-mr-2 hx-no-underline">{{ $catName }}</a>
                   {{- end -}}

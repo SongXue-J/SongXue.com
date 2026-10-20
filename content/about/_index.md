@@ -42,10 +42,10 @@ I am a Ph.D. candidate in Pathogen Biology at **Fudan University** (2022–prese
 This blog documents my work at the intersection of pathogen biology, immunology, and computational analysis. Four main themes:
 
 {{< cards >}}
-  {{< card link="/categories/ai-agent" title="AI Agent Workflows" icon="lightning-bolt" subtitle="LLM-powered research automation" >}}
-  {{< card link="/categories/research-software" title="Research Software Tips" icon="cube" subtitle="FlowJo, ChimeraX, PyMOL, Schrödinger" >}}
-  {{< card link="/categories/r-visualization" title="R Data Analysis & Visualization" icon="chart-bar" subtitle="Practical techniques for biological data" >}}
-  {{< card link="/categories/ai-mab" title="AI-mAb Literature Review" icon="document-search" subtitle="AI × antibody frontier progress" >}}
+  {{< card link="/categories/ai-agent" title="AI Workflows" icon="lightning-bolt" subtitle="LLM-powered research automation" >}}
+  {{< card link="/categories/protocols" title="Protocols & Methods" icon="beaker" subtitle="Wet-lab protocols & methodology reviews" >}}
+  {{< card link="/categories/tools-tips" title="Tools & Tips" icon="cube" subtitle="FlowJo, ChimeraX, PyMOL, Schrödinger" >}}
+  {{< card link="/categories/data-analysis" title="Data Analysis & Visualization" icon="chart-bar" subtitle="Practical techniques for biological data" >}}
 {{< /cards >}}
 
 ---

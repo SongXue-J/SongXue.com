@@ -405,3 +405,7 @@ graph LR
 ---
 
 完整参数文档可参考 [Hextra 官方 Shortcodes 文档](https://imfing.github.io/hextra/docs/guide/shortcodes/)。
+
+{{< callout type="info" emoji="🤖" >}}
+**AI 使用声明**：本文由作者撰写，AI 工具（Claude）辅助完成初稿起草、中英互译与格式整理。作者已审校全部内容，并对准确性承担最终责任。
+{{< /callout >}}

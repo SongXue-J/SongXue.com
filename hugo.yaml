@@ -1,6 +1,6 @@
 theme: "hextra"
 # Configuration
-baseURL: "/"
+baseURL: "https://www.songxue-j.com/"
 title: "SongXue|Blog"
 
 enableRobotsTXT: true
@@ -87,6 +87,12 @@ menu:
       url: "https://github.com/SongXue-J"
       params:
         icon: github
+    - name: Google Scholar
+      weight: 7
+      url: "https://scholar.google.cz/citations?user=dPMGvFMAAAAJ"
+      params:
+        icon: scholar
+        hl: true
 
   sidebar:
     - identifier: more

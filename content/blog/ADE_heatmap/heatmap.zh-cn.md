@@ -2,7 +2,7 @@
 title: "利用pheatmap制作热图"
 author: "薛嵩"
 date: "2025-02-26"
-categories: ["r-visualization"]
+categories: ["data-analysis"]
 tags:
 - R
 - pheatmap
@@ -235,4 +235,8 @@ colnames(output.data)
 ``` r
  ggsave(file = outputpath, plot = p1,width = 11,height = 10,dpi = 300)
 ```
+
+{{< callout type="info" emoji="🤖" >}}
+**AI 使用声明**：本文由作者撰写，AI 工具（Claude）辅助完成初稿起草、中英互译与格式整理。作者已审校全部内容，并对准确性承担最终责任。
+{{< /callout >}}
 

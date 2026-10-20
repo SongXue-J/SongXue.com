@@ -33,11 +33,18 @@ layout: hextra-home
 
 {{< hextra/feature-grid cols="2" >}}
   {{< hextra/feature-card
-    title="AI Agent Workflows"
+    title="AI Workflows"
     subtitle="Building LLM-powered agents for literature mining, automated data analysis, and research automation."
     icon="lightning-bolt"
     link="/categories/ai-agent"
     style="background: radial-gradient(ellipse at 50% 80%,rgba(194,97,254,0.15),hsla(0,0%,100%,0));"
+  >}}
+  {{< hextra/feature-card
+    title="Protocols & Methods"
+    subtitle="Wet-lab protocols and methodology overviews — from PBMC isolation to quantitative proteomics."
+    icon="beaker"
+    link="/categories/protocols"
+    style="background: radial-gradient(ellipse at 50% 80%,rgba(142,53,74,0.15),hsla(0,0%,100%,0));"
   >}}
   {{< hextra/feature-card
     title="Tools & Tips"
@@ -47,17 +54,10 @@ layout: hextra-home
     style="background: radial-gradient(ellipse at 50% 80%,rgba(221,210,59,0.15),hsla(0,0%,100%,0));"
   >}}
   {{< hextra/feature-card
-    title="R Data Analysis & Visualization"
-    subtitle="Practical techniques for biological data analysis — heatmaps, ggplot2 workflows, and reproducible pipelines."
+    title="Data Analysis & Visualization"
+    subtitle="Practical techniques for biological data — phylogenetics, sequencing pipelines, and reproducible visualization."
     icon="chart-bar"
-    link="/categories/r-visualization"
+    link="/categories/data-analysis"
     style="background: radial-gradient(ellipse at 50% 80%,rgba(59,130,246,0.15),hsla(0,0%,100%,0));"
-  >}}
-  {{< hextra/feature-card
-    title="AI-mAb Literature Review"
-    subtitle="AI-driven antibody discovery, computational antibody engineering, and frontier progress in AI × antibody research."
-    icon="document-search"
-    link="/categories/ai-mab"
-    style="background: radial-gradient(ellipse at 50% 80%,rgba(142,53,74,0.15),hsla(0,0%,100%,0));"
   >}}
 {{< /hextra/feature-grid >}}

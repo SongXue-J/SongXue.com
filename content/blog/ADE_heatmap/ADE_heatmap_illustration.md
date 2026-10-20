@@ -2,7 +2,7 @@
 title: "ADE Heatmap illustration"
 author: "Song Xue"
 date: "2025-02-17"
-categories: ["r-visualization"]
+categories: ["data-analysis"]
 tags:
 - R
 - pheatmap
@@ -200,6 +200,10 @@ We did it! Now enjoy your heatmap!
 ``` r
 >  ggsave(file = outputpath, plot = p1,width = 11,height = 10,dpi = 300)
 ```
+
+{{< callout type="info" emoji="🤖" >}}
+**AI disclosure**: This article was written by the author with assistance from Claude (Anthropic) for drafting, bilingual translation, and formatting. The author has reviewed all content and takes full responsibility for its accuracy.
+{{< /callout >}}
  
  
 

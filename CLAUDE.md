@@ -38,6 +38,29 @@ Blog/
 - Blog posts live in `content/blog/<slug>/index.md` + `index.zh-cn.md`
 - Frontmatter: `title`, `date`, `categories`, `tags`, `description`, `toc`
 
+## AI usage disclosure（必填）
+
+每篇博客文章（中英文版本各自）**必须**在正文末尾、参考文献 / 相关方法之前添加一段 AI 使用声明，使用 Hextra 信息框 `{{< callout type="info" emoji="🤖" >}}`。
+
+**中文模板**（写入 `index.zh-cn.md`）：
+
+```markdown
+{{< callout type="info" emoji="🤖" >}}
+**AI 使用声明**：本文由作者撰写，AI 工具（Claude）辅助完成初稿起草、中英互译与格式整理。作者已审校全部内容，并对准确性承担最终责任。
+{{< /callout >}}
+```
+
+**英文模板**（写入 `index.md`）：
+
+```markdown
+{{< callout type="info" emoji="🤖" >}}
+**AI disclosure**: This article was written by the author with assistance from Claude (Anthropic) for drafting, bilingual translation, and formatting. The author has reviewed all content and takes full responsibility for its accuracy.
+{{< /callout >}}
+```
+
+- 「初稿起草、中英互译与格式整理」用途措辞可按每篇实际 AI 参与程度微调（协议文用「初稿起草与格式整理」，数据文可加「代码示例」），但须保留「作者审校并承担最终责任」表述。
+- 仅中文的文章（如协议文）只加中文模板。
+
 ## Commands
 
 ```bash
