@@ -6,6 +6,10 @@ tags: ["Hugo", "Hextra", "Shortcodes", "Blog"]
 description: "A quick reference for Hextra theme shortcodes with live rendered examples for better blog formatting."
 ---
 
+{{< callout type="error" emoji="🤖" >}}
+**AI disclosure**: The outline of this article was determined by the author. AI tools (Claude and DeepSeek) assisted with drafting the initial manuscript and formatting. The author has reviewed all content and takes final responsibility for its accuracy.
+{{< /callout >}}
+
 Hextra is a modern Hugo theme for documentation and blogs. Beyond standard Markdown, it ships with a rich set of shortcodes to enhance your content. This post covers the most useful ones with syntax and live rendered examples.
 
 <!--more-->
@@ -405,7 +409,3 @@ Uses `{{%/* */%}}` delimiters. Supports remote URLs.
 ---
 
 For full parameter reference, see the [Hextra Shortcodes Documentation](https://imfing.github.io/hextra/docs/guide/shortcodes/).
-
-{{< callout type="info" emoji="🤖" >}}
-**AI disclosure**: This article was written by the author with assistance from Claude (Anthropic) for drafting, bilingual translation, and formatting. The author has reviewed all content and takes full responsibility for its accuracy.
-{{< /callout >}}

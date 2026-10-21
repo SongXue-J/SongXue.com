@@ -11,6 +11,10 @@ tags:
 description: "通过 CC Switch 将 DeepSeek/ Xiaomi MiMo 等模型接入 Claude Code"
 ---
 
+{{< callout type="error" emoji="🤖" >}}
+**AI 使用声明**：本文的大纲由作者确定，AI 工具（Claude 与 DeepSeek）辅助完成初稿起草与格式整理。作者已审校本文全部内容，并对准确性承担最终责任。
+{{< /callout >}}
+
 ## 一、 概述：为什么需要这套方案？
 
 首先是因为 Anthropic 对中国大陆账号愈发严格的禁用管控，其次是因为高昂的订阅费用（尽管由于繁琐的订阅流程，我并没有实际订阅过）。
@@ -378,10 +382,6 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
 
 ---
-
-{{< callout type="info" emoji="🤖" >}}
-**AI 使用声明**：本文由作者撰写，AI 工具（Claude）辅助完成初稿起草、中英互译与格式整理。作者已审校全部内容，并对准确性承担最终责任。
-{{< /callout >}}
 
 ## 资源链接
 

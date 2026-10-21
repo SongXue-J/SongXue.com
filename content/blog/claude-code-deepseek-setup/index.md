@@ -11,6 +11,10 @@ tags:
 description: "Connect DeepSeek, Xiaomi MiMo, and other models to Claude Code via CC Switch"
 ---
 
+{{< callout type="error" emoji="🤖" >}}
+**AI disclosure**: The outline of this article was determined by the author. AI tools (Claude and DeepSeek) assisted with drafting the initial manuscript and formatting. The author has reviewed all content and takes final responsibility for its accuracy.
+{{< /callout >}}
+
 ## 1. Why This Setup?
 
 The primary reason is Anthropic's increasingly strict access restrictions on accounts registered in mainland China, compounded by high subscription costs — though I've never actually subscribed due to the cumbersome process.
@@ -374,10 +378,6 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
 
 ---
-
-{{< callout type="info" emoji="🤖" >}}
-**AI disclosure**: This article was written by the author with assistance from Claude (Anthropic) for drafting, bilingual translation, and formatting. The author has reviewed all content and takes full responsibility for its accuracy.
-{{< /callout >}}
 
 ## Resources
 

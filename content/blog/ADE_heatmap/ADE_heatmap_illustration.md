@@ -10,7 +10,9 @@ tags:
 - antibody
 ---
 
-
+{{< callout type="error" emoji="🤖" >}}
+**AI disclosure**: The outline of this article was determined by the author. AI tools (Claude and DeepSeek) assisted with drafting the initial manuscript and formatting. The author has reviewed all content and takes final responsibility for its accuracy.
+{{< /callout >}}
 
 ## Introduciton
 
@@ -200,10 +202,6 @@ We did it! Now enjoy your heatmap!
 ``` r
 >  ggsave(file = outputpath, plot = p1,width = 11,height = 10,dpi = 300)
 ```
-
-{{< callout type="info" emoji="🤖" >}}
-**AI disclosure**: This article was written by the author with assistance from Claude (Anthropic) for drafting, bilingual translation, and formatting. The author has reviewed all content and takes full responsibility for its accuracy.
-{{< /callout >}}
  
  
 

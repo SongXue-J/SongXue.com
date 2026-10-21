@@ -11,6 +11,10 @@ tags:
 description: "Extending the MCP-based multimedia recognition solution with a PreToolUse Hook to prevent the Agent from bypassing MCP and directly reading media files during long tasks"
 ---
 
+{{< callout type="error" emoji="🤖" >}}
+**AI disclosure**: The outline of this article was determined by the author. AI tools (Claude and DeepSeek) assisted with drafting the initial manuscript and formatting. The author has reviewed all content and takes final responsibility for its accuracy.
+{{< /callout >}}
+
 {{< callout emoji="🙏" >}}
 **Acknowledgments**: This tutorial builds on the **mimo-media-recognition-mcp** project developed by [congxxx](https://github.com/congxxx). [Original article](https://www.cnblogs.com/congxinxue/p/20086413)
 
@@ -465,10 +469,6 @@ This "soft guidance + hard interception" pattern is not limited to multimedia sc
 {{< /callout >}}
 
 ---
-
-{{< callout type="info" emoji="🤖" >}}
-**AI disclosure**: This article was written by the author with assistance from Claude (Anthropic) for drafting, bilingual translation, and formatting. The author has reviewed all content and takes full responsibility for its accuracy.
-{{< /callout >}}
 
 ## References
 

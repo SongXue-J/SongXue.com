@@ -11,6 +11,10 @@ tags:
 description: "在原作者 MCP 方案基础上，通过 PreToolUse Hook 解决 Agent 直接读取多媒体文件的问题"
 ---
 
+{{< callout type="error" emoji="🤖" >}}
+**AI 使用声明**：本文的大纲由作者确定，AI 工具（Claude 与 DeepSeek）辅助完成初稿起草与格式整理。作者已审校本文全部内容，并对准确性承担最终责任。
+{{< /callout >}}
+
 {{< callout emoji="🙏" >}}
 **致谢**：本教程基于 [congxxx](https://github.com/congxxx) 开发的 **mimo-media-recognition-mcp** 项目。[原作者的文章](https://www.cnblogs.com/congxinxue/p/20086413)
 
@@ -469,10 +473,6 @@ content_blocks.append({
 {{< /callout >}}
 
 ---
-
-{{< callout type="info" emoji="🤖" >}}
-**AI 使用声明**：本文由作者撰写，AI 工具（Claude）辅助完成初稿起草、中英互译与格式整理。作者已审校全部内容，并对准确性承担最终责任。
-{{< /callout >}}
 
 ## 参考链接
 

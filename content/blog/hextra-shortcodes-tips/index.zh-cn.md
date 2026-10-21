@@ -6,6 +6,10 @@ tags: ["Hugo", "Hextra", "Shortcodes", "博客搭建"]
 description: "整理 Hextra 主题内置的 Shortcodes，配合写法示例和渲染效果，快速上手博客排版。"
 ---
 
+{{< callout type="error" emoji="🤖" >}}
+**AI 使用声明**：本文的大纲由作者确定，AI 工具（Claude 与 DeepSeek）辅助完成初稿起草与格式整理。作者已审校本文全部内容，并对准确性承担最终责任。
+{{< /callout >}}
+
 Hextra 是一个基于 Hugo 的现代化文档/博客主题，除了标准 Markdown 语法外，还提供了丰富的 Shortcodes 来增强内容表现力。本文整理了最常用的 Shortcodes，每个都附带写法和真实渲染效果，方便日常写作时快速查阅。
 
 <!--more-->
@@ -405,7 +409,3 @@ graph LR
 ---
 
 完整参数文档可参考 [Hextra 官方 Shortcodes 文档](https://imfing.github.io/hextra/docs/guide/shortcodes/)。
-
-{{< callout type="info" emoji="🤖" >}}
-**AI 使用声明**：本文由作者撰写，AI 工具（Claude）辅助完成初稿起草、中英互译与格式整理。作者已审校全部内容，并对准确性承担最终责任。
-{{< /callout >}}

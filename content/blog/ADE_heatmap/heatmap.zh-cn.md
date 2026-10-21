@@ -10,7 +10,9 @@ tags:
 - 抗体
 ---
 
-
+{{< callout type="error" emoji="🤖" >}}
+**AI 使用声明**：本文的大纲由作者确定，AI 工具（Claude 与 DeepSeek）辅助完成初稿起草与格式整理。作者已审校本文全部内容，并对准确性承担最终责任。
+{{< /callout >}}
 
 这篇文章描述了如何合并来自不同实验的多个值以创建热图的方法。
 
@@ -235,8 +237,4 @@ colnames(output.data)
 ``` r
  ggsave(file = outputpath, plot = p1,width = 11,height = 10,dpi = 300)
 ```
-
-{{< callout type="info" emoji="🤖" >}}
-**AI 使用声明**：本文由作者撰写，AI 工具（Claude）辅助完成初稿起草、中英互译与格式整理。作者已审校全部内容，并对准确性承担最终责任。
-{{< /callout >}}
 
