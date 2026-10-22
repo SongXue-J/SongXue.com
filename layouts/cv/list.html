@@ -1,0 +1,10 @@
+{{ define "main" }}
+  <main class="cv-document">
+    {{ with .Translations }}
+      {{ range first 1 . }}
+        <a class="cv-lang cv-lang--cv" href="{{ .RelPermalink }}" hreflang="{{ .Language.Lang }}">{{ .Language.LanguageName }}</a>
+      {{ end }}
+    {{ end }}
+    {{ .Content }}
+  </main>
+{{ end }}
