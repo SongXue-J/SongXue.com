@@ -12,7 +12,7 @@ layout: hextra-home
 
 <div class="hx-mt-6 hx-mb-6">
 {{< hextra/hero-headline >}}
-  From B cells to encoding&nbsp;<br class="sm:hx-block hx-hidden" />
+  From B cells to Bytes&nbsp;<br class="sm:hx-block hx-hidden" />
   describing humoral immune responses with data
 {{< /hextra/hero-headline >}}
 </div>

@@ -30,7 +30,7 @@ At my wit's end, I searched online and came across an [article](https://www.jame
 
 For now, this site is positioned as a technical blog, where I will share some of my experience with R plotting, the process of building this website, and the use of AI tools. Of course, I am actually more skilled at "wet" lab work, so I will also organize and summarize some of the experimental protocols I use in daily work—both to make them easier for me to keep in order and, I hope, to be of some help to others.
 
-Anyway, thank you, James, even though we have never formally spoken.
+Thank you, James, even though we have never formally spoken.
 
 ## How I Use AI Tools
 
@@ -44,6 +44,6 @@ But the rocket-like development of AI tools, especially the emergence of agent c
 
 If some of the content here has been helpful to you, I hope you will bear with the somewhat "AI-flavored" prose. Because without its help, these pieces would never have been produced—and there would have been no way for you to see them.
 
-Anyway, thank you, Claude; thank you, DeepSeek.
+Thank you, Claude; thank you, DeepSeek.
 
-Finally, thank you for your interest. If you would like to get in touch with me, you can reach me by email: [17301010038@fudan.edu.cn](mailto:17301010038@fudan.edu.cn).
+Finally, thank you for your interest. If you would like to get in touch with me for any reason, you can reach me by email: [17301010038@fudan.edu.cn](mailto:17301010038@fudan.edu.cn).

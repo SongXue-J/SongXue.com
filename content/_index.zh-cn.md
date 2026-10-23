@@ -12,7 +12,7 @@ layout: hextra-home
 
 <div class="hx-mt-6 hx-mb-6">
 {{< hextra/hero-headline >}}
-  从 B 细胞到编码&nbsp;<br class="sm:hx-block hx-hidden" />
+  从 B 细胞到序列编码&nbsp;<br class="sm:hx-block hx-hidden" />
   用数据描述体液免疫反应
 {{< /hextra/hero-headline >}}
 </div>
